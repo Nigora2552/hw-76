@@ -12,7 +12,6 @@ messagesRouter.get('/', async (req: Request, res: Response) => {
 
 
     const queryDate = req.query.datetime as string;
-    res.send(queryDate)
     const date = new Date(queryDate);
     if (isNaN(date.getDate())) {
         return res.send({invalid: 'Invalid date'})
@@ -21,11 +20,8 @@ messagesRouter.get('/', async (req: Request, res: Response) => {
         return res.send({message: 'No query'})
     }
 
-    const filterMessage = arrayWithLimit.filter(message => new Date(message.datetime));
-    if(filterMessage){
-        res.send(filterMessage)
-
-    }
+    const filterMessage = arrayWithLimit.filter(message => new Date(message.datetime) > date);
+        return res.send(filterMessage)
 
 });
 

@@ -19,8 +19,7 @@ const fileDb = {
         return data;
     },
     async addMessage(item: MessageWithoutId) {
-        const id = crypto.randomUUID();
-        const newMessage = {id: crypto.randomUUID(), ...item, datetime: new Date().toString()};
+        const newMessage = {id: crypto.randomUUID(), ...item, datetime: new Date().toISOString()};
         data.push(newMessage)
         await this.save();
         return newMessage;
