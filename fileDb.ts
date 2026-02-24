@@ -1,6 +1,6 @@
 import {IMessages, MessageWithoutId} from "./types";
 import {promises as fs} from "fs";
-import  crypto from "node:crypto";
+import  crypto from "crypto";
 
 const fileName = './db.json';
 
@@ -20,7 +20,7 @@ const fileDb = {
     },
     async addMessage(item: MessageWithoutId) {
         const id = crypto.randomUUID();
-        const newMessage = {id, ...item, datetime: new Date().toString()};
+        const newMessage = {id: crypto.randomUUID(), ...item, datetime: new Date().toString()};
         data.push(newMessage)
         await this.save();
         return newMessage;
