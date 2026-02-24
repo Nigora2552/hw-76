@@ -1,8 +1,8 @@
 import './App.css'
 import NavBar from "./components/NavBar/NavBar.tsx";
 import {Route, Routes} from "react-router-dom";
-import {Home} from "@mui/icons-material";
 import NewMessage from "./containers/NewMessage/NewMessage.tsx";
+import Home from "./containers/Home/Home.tsx";
 
 const App = () => (
     <>

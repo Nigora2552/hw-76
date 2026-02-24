@@ -19,6 +19,17 @@ export const messagesSlice = createSlice({
     initialState,
     reducers: {},
     extraReducers: builder => {
+        builder.addCase(fetchMessages.pending, (state) => {
+            state.loading = true
+        });
+        builder.addCase(fetchMessages.fulfilled, (state, action) => {
+            state.loading = false
+            state.items = action.payload
+        });
+        builder.addCase(fetchMessages.rejected, (state) => {
+            state.loading = false
+        });
+
         builder.addCase(createMessage.pending, (state) => {
             state.loading = true
         });
@@ -30,6 +41,12 @@ export const messagesSlice = createSlice({
         });
     }
 });
+
+export const fetchMessages = createAsyncThunk<IMessages[], void>('message/fetchMessages',
+    async ( ) => {
+    const response = await axiosApi.get<IMessages[]>('/messages');
+    return response.data || [];
+    })
 
 export const createMessage = createAsyncThunk<void, MessageMutation>('message/createMessage',
     async (item: MessageMutation) => {

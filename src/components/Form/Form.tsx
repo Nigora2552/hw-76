@@ -67,7 +67,7 @@ const Form: React.FC<Props> = ({initialValues, onSubmitForm, isEdit, loading = f
                     onChange={onInputChange}
 
                 />
-                <Button type='submit' fullWidth disabled={loading}>{isEdit ? 'Edit' : 'Add'} message</Button>
+                <Button type='submit' variant='outlined' fullWidth disabled={loading}>{isEdit ? 'Edit' : 'Add'} message</Button>
             </form>
         </Container>
     );
