@@ -5,9 +5,30 @@ import fileDb from "../fileDb";
 const messagesRouter = express.Router();
 
 
-messagesRouter.get('/', async (_req: Request, res: Response) => {
-    const allMessages = await fileDb.getMessage()
-    res.send(allMessages)
+messagesRouter.get('/', async (req: Request, res: Response) => {
+    const arrayMessages = await fileDb.getMessage();
+    const limit = 30
+    const arrayWithLimit = arrayMessages.slice(-limit);
+
+
+    const queryDate = req.query.datetime as string;
+    const date = new Date(queryDate);
+    if (isNaN(date.getDate())) {
+        return res.send('Invalid date')
+    }
+
+    if (!queryDate) {
+        return res.send({message: 'No query'})
+    }
+    arrayWithLimit.map(item => {
+        if (queryDate > item.datetime) {
+
+        }
+    });
+
+
+
+
 });
 
 messagesRouter.post('/', async (req: Request, res: Response) => {
@@ -18,7 +39,7 @@ messagesRouter.post('/', async (req: Request, res: Response) => {
     const newMessage = {
         author: req.body.author,
         message: req.body.message,
-        datetime: new Date().toString(),
+        datetime: req.body.datetime,
     };
 
     const savedMessage = await fileDb.addMessage(newMessage)
