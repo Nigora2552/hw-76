@@ -50,11 +50,7 @@ export const fetchMessages = createAsyncThunk<IMessages[], void>('message/fetchM
 
 export const createMessage = createAsyncThunk<void, MessageMutation>('message/createMessage',
     async (item: MessageMutation) => {
-    const newMessage = {
-        ...item, item,
-        datetime: new Date().toISOString(),
-    }
-        await axiosApi.post('/messages', newMessage)
+        await axiosApi.post('/messages', item)
     });
 
 export const selectMessages = (state: RootState) => state.message.items;
