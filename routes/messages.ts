@@ -6,28 +6,26 @@ const messagesRouter = express.Router();
 
 
 messagesRouter.get('/', async (req: Request, res: Response) => {
-    const arrayMessages = await fileDb.getMessage();
+    const allMessages = await fileDb.getMessage();
     const limit = 30
-    const arrayWithLimit = arrayMessages.slice(-limit);
+    let arrayWithLimit = allMessages.slice(-limit);
 
 
     const queryDate = req.query.datetime as string;
+    res.send(queryDate)
     const date = new Date(queryDate);
     if (isNaN(date.getDate())) {
-        return res.send('Invalid date')
+        return res.send({invalid: 'Invalid date'})
     }
-
     if (!queryDate) {
         return res.send({message: 'No query'})
     }
-    arrayWithLimit.map(item => {
-        if (queryDate > item.datetime) {
 
-        }
-    });
+    const filterMessage = arrayWithLimit.filter(message => new Date(message.datetime));
+    if(filterMessage){
+        res.send(filterMessage)
 
-
-
+    }
 
 });
 
